@@ -90,7 +90,7 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to='/sing-in'
+            to='/sign-in'
             className={({ isActive }) =>
               isActive ? activeStyle : undefined
             }>
