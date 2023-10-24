@@ -8,12 +8,25 @@ function Card({ data }) {
         count,
         setCount,
         openProductDetail,
+        closeProductDetail,
         setProductToShow,
+        cartProducts,
+        setCartProducts,
+        openCheckoutSideMenu,
     } = React.useContext(ShoppingCartContext);
 
     const showProduct = (productDetail) => {
         openProductDetail()
         setProductToShow(productDetail)
+    }
+
+    const addProductsToCart = (event, productData) => {
+        event.stopPropagation();
+        setCount(count + 1)
+        setCartProducts([...cartProducts, productData])
+        openCheckoutSideMenu();
+        closeProductDetail();
+        console.log ('CART: ', cartProducts)
     }
 
     return (
@@ -29,8 +42,9 @@ function Card({ data }) {
                     src={data.image} alt="product" />
 
                 <button className='absolute top-0 right-0 font-light bg-white border border-gray-500 rounded-full w-6 h-6 flex justify-center items-center m-2 hover:scale-110'
-                    onClick={() => setCount(count + 1)}>
-                    <PlusIcon className='w-4 h-4 text-black'></PlusIcon>
+                    onClick={(event) => addProductsToCart(event, data)}>
+                    <PlusIcon className='w-4 h-4 text-black'>
+                    </PlusIcon>
                 </button>
             </figure>
 
