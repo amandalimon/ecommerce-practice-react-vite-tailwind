@@ -1,12 +1,14 @@
 import React from 'react'
 import { ShoppingCartContext } from '../../Context'
 import {XMarkIcon} from '@heroicons/react/24/solid'
+import OrderCard from '../../Components/OrderCard'
 import './styles.css'
 
 function CheckoutSideMenu() {
     const {
         CheckoutSideMenu,
-        closeCheckoutSideMenu,
+        closeCheckoutSideMenu,      
+        cartProducts, 
     }= React.useContext(ShoppingCartContext);
 
     return (
@@ -18,6 +20,16 @@ function CheckoutSideMenu() {
                     onClick={()=>closeCheckoutSideMenu()}>
                     </XMarkIcon>
                 </div>
+            </div>
+            <div className='px-6'> {
+                cartProducts.map(data => (
+                    <OrderCard 
+                        key={data.id}
+                        title={data.title}
+                        image={data.image}
+                        price={data.price}
+                    />
+                ))}
             </div>
         </aside>
     )

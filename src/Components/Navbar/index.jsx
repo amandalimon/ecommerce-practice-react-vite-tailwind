@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <nav className='bg-white flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light'>
       <ul className='flex items-center gap-3'>
-        <li className='font-semibold text-lg'>
+        <li className='font-semibold text-lg text-pink'>
           <NavLink to='/'>
             Shopi
           </NavLink>
@@ -44,11 +44,11 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to='/jewelery'
+            to='/jewelry'
             className={({ isActive }) =>
               isActive ? activeStyle : undefined
             }>
-            Jewelery
+            Jewelry
           </NavLink>
         </li>
         <li>
