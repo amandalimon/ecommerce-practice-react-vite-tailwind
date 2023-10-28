@@ -1,5 +1,5 @@
 import React from 'react'
-import { PlusIcon } from '@heroicons/react/24/solid'
+import { PlusIcon, CheckIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from '../../Context'
 
 
@@ -26,7 +26,24 @@ function Card({ data }) {
         setCartProducts([...cartProducts, productData])
         openCheckoutSideMenu();
         closeProductDetail();
-        console.log ('CART: ', cartProducts)
+        console.log('CART: ', cartProducts)
+    }
+
+    const renderIcon = (id) => {
+        const isInCart = cartProducts.some(product=> product.id === id);         
+        return (
+            isInCart ? (
+                <button className='absolute top-0 right-0 font-light bg-lime-500/50 rounded-full w-6 h-6 flex justify-center items-center m-2 hover:scale-110'>
+                    <CheckIcon className='w-4 h-4 text-white' />
+                </button>
+            )
+                : (
+                    <button className='absolute top-0 right-0 font-light bg-white border border-gray-500 rounded-full w-6 h-6 flex justify-center items-center m-2 hover:scale-110'>
+                        <PlusIcon className='w-4 h-4 text-black'
+                        onClick={(event) => addProductsToCart(event, data)} />
+                    </button>
+                )
+        );
     }
 
     return (
@@ -40,16 +57,13 @@ function Card({ data }) {
                 </span>
                 <img className='w-full h-full object-contain'
                     src={data.image} alt="product" />
+                
+                {renderIcon(data.id)}
 
-                <button className='absolute top-0 right-0 font-light bg-white border border-gray-500 rounded-full w-6 h-6 flex justify-center items-center m-2 hover:scale-110'
-                    onClick={(event) => addProductsToCart(event, data)}>
-                    <PlusIcon className='w-4 h-4 text-black'>
-                    </PlusIcon>
-                </button>
             </figure>
 
             <p className='flex justify-between'>
-            <span className='mr-2 text-sm truncate'>
+                <span className='mr-2 text-sm truncate'>
                     {data.title}
                 </span>
                 <span className='text-lg font-medium'>
