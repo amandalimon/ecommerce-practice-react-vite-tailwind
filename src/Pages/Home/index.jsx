@@ -1,9 +1,14 @@
-import {useState, useEffect} from 'react'
+import React from 'react'
+import {useState, useEffect } from 'react'
 import Layout from '../../Components/Layout'
 import Card from '../../Components/Card'
 import ProductDetail from '../../Components/ProductDetail'
+import Modal from '../../Components/Modal';
+import { ShoppingCartContext } from '../../Context'
+
 
 function Home() {
+  const { openModal } = React.useContext(ShoppingCartContext);
   const [items, setItems] = useState (null)
 
   useEffect(() =>{
@@ -23,7 +28,11 @@ function Home() {
         />
         ))}
         </div>
-        <ProductDetail/>
+        {openModal && (
+        <Modal>
+          <ProductDetail/>
+        </Modal>
+        )}
       </Layout>
     )
   }

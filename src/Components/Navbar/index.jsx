@@ -1,10 +1,15 @@
-import { useContext } from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react'
+import {NavLink} from 'react-router-dom'
+import {ShoppingCartContext} from '../../Context'
 import {ShoppingBagIcon} from '@heroicons/react/24/solid'
-import { ShoppingCartContext } from '../../Context'
+
 
 const Navbar = () => {
-  const context = useContext(ShoppingCartContext)
+  const { 
+    cartProducts, 
+    setOpenCheckoutSM, 
+  } = React.useContext(ShoppingCartContext); 
+
   const activeStyle = 'underline underline-offset-4'
 
   return (
@@ -101,9 +106,10 @@ const Navbar = () => {
             Sign In
           </NavLink>
         </li>
-        <li className='flex items-center'>
-          <ShoppingBagIcon className='w-6 h-6'/>
-          <div>{context.cartProducts.length}</div>
+        <li className='flex items-center cursor-pointer'>
+          <ShoppingBagIcon className='w-6 h-6'
+             onClick={()=> setOpenCheckoutSM(state => !state)} />
+          <div>{cartProducts.length}</div>
         </li>
       </ul>
     </nav>
