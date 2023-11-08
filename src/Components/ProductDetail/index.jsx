@@ -36,24 +36,10 @@ function ProductDetail() {
                         ${productToShow.price}</span>
                 </p>
             </div>
-
         
-            
-
-            
         </aside>
     )
 }
-
-
-<aside>
-    <div>
-
-    </div>
-
-
-
-</aside>
 
 export default ProductDetail
 

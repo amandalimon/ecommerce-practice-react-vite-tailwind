@@ -10,5 +10,5 @@ export const totalPrice = (products) => {
         sum += product.price * product.quantity
     });
 
-    return sum   
+    return sum
 }
