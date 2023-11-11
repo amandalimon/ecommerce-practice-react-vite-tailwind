@@ -1,16 +1,26 @@
-import React from 'react'
-import {NavLink} from 'react-router-dom'
-import {ShoppingCartContext} from '../../Context'
-import {ShoppingBagIcon} from '@heroicons/react/24/solid'
-
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { ShoppingCartContext } from '../../Context';
+import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 
 const Navbar = () => {
-  const { 
-    cartProducts, 
-    setOpenCheckoutSM, 
-  } = React.useContext(ShoppingCartContext); 
+  const {
+    cartProducts,
+    setOpenCheckoutSM,
+  } = React.useContext(ShoppingCartContext);
 
-  const activeStyle = 'underline underline-offset-4'
+  const normalizeCategory = (category) => {
+    return category.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '-');
+  };
+
+  const categories = [
+    "Electronics",
+    "Jewelery",
+    "Men's clothing",
+    "Women's clothing"
+  ];
+
+  const activeStyle = 'underline underline-offset-4';
 
   return (
     <nav className='bg-white flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light'>
@@ -20,60 +30,18 @@ const Navbar = () => {
             Shopi
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to='/'
-            className={({ isActive }) =>
-              isActive ? activeStyle : undefined
-            }>
-            All
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/men'
-            className={({ isActive }) =>
-              isActive ? activeStyle : undefined
-            }>
-            Men
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/women'
-            className={({ isActive }) =>
-              isActive ? activeStyle : undefined
-            }>
-            Women
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/jewelry'
-            className={({ isActive }) =>
-              isActive ? activeStyle : undefined
-            }>
-            Jewelry
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/electronics'
-            className={({ isActive }) =>
-              isActive ? activeStyle : undefined
-            }>
-            Electronics
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to='/others'
-            className={({ isActive }) =>
-              isActive ? activeStyle : undefined
-            }>
-            Others
-          </NavLink>
-        </li>
+        {categories.map(category => (
+          <li key={category}>
+            <NavLink
+              to={`/category/${normalizeCategory(category)}`}
+              className={({ isActive }) =>
+                isActive ? activeStyle : undefined
+              }
+            >
+              {category}
+            </NavLink>
+          </li>
+        ))}
       </ul>
       <ul className='flex items-center gap-3'>
         <li className='text-black/60'>
@@ -108,7 +76,7 @@ const Navbar = () => {
         </li>
         <li className='flex items-center cursor-pointer'>
           <ShoppingBagIcon className='w-6 h-6'
-             onClick={()=> setOpenCheckoutSM(state => !state)} />
+            onClick={() => setOpenCheckoutSM(state => !state)} />
           <div>{cartProducts.length}</div>
         </li>
       </ul>

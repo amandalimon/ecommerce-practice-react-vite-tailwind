@@ -1,56 +1,53 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { ShoppingCartContext } from '../../Context'
 import Layout from '../../Components/Layout'
 import Card from '../../Components/Card'
-import ProductDetail from '../../Components/ProductDetail'
 import Modal from '../../Components/Modal';
-import { ShoppingCartContext } from '../../Context'
-
+import ProductDetail from '../../Components/ProductDetail'
 
 function Home() {
   const {
-    openModal,
     items,
-    searchByTitle,
-    setSearchByTitle,
-    filteredItems,
+    openModal,
   } = React.useContext(ShoppingCartContext);
 
-  const renderView = () => {
-    if (searchByTitle?.length > 0) {
-      if (filteredItems?.length > 0) {
-        return (
-          filteredItems?.map(item => (
-            <Card key={item.id} data={item} />
-          ))
-        )
-      } else {
-        return (
-          <div>We don't have anything</div>
-        )
-      }
-    } else {
-      return (
-        items?.map(item => (
-          <Card key={item.id} data={item} />
-        ))
-      )
-    }
-  }
+  const { category } = useParams();
+  const [itemsByCategory, setItemsByCategory] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [filteredItems, setFilteredItems] = useState([]);
+
+  useEffect(() => {
+    const categoryLower = category?.toLowerCase();
+    const filteredItems = categoryLower
+      ? items.filter((item) => item.category && item.category.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '-') === categoryLower)
+      : items;
+    setItemsByCategory(filteredItems);
+  }, [category, items]);
+
+  useEffect(() => {
+    setFilteredItems(
+      itemsByCategory.filter((item) => item.title && item.title.toLowerCase().includes(searchValue.toLowerCase()))
+    );
+  }, [searchValue, itemsByCategory]);
 
   return (
     <Layout>
-
       <h1 className='mt-3 font-medium text-2xl'>Exclusive Products</h1>
 
       <input
         type="text"
         placeholder='Looking for a product?'
         className='rounded-lg border-black w-1/3 p-4 mb-4 focus:outline-none'
-        onChange={(event) => setSearchByTitle(event.target.value)}
+        onChange={(event) => setSearchValue(event.target.value)}
       />
-      
+
       <div className='grid gap-4 grid-cols-4 w-full max-w-screen-lg'>
-        {renderView()}
+        {filteredItems.length < 1 ? (
+          <p className='text-2xl col-span-3 mb-6'>Nothing here!</p>
+        ) : (
+          filteredItems.map((item) => <Card key={item.id} data={item} />)
+        )}
       </div>
 
       {openModal && (
@@ -62,4 +59,4 @@ function Home() {
   )
 }
 
-export default Home 
+export default Home

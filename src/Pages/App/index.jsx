@@ -13,13 +13,14 @@ import './App.css'
 const AppRoutes = () => {
   let routes = useRoutes([
     { path: '/', element: <Home /> },
-    { path: '/my-account', element: <MyAccount/> },
-    { path: '/my-order', element: <MyOrder/> },
-    { path: '/my-orders', element: <MyOrders/> },
-    { path: '/my-orders/last', element: <MyOrder/> },
-    {path: '/my-orders/:id', element:<MyOrder/>},
-    { path: '/sign-in', element: <SignIn/> },
-    { path: '/*', element: <NotFound/> },
+    { path: '/category/:category', element: <Home /> },
+    { path: '/my-account', element: <MyAccount /> },
+    { path: '/my-order', element: <MyOrder /> },
+    { path: '/my-orders', element: <MyOrders /> },
+    { path: '/my-orders/last', element: <MyOrder /> },
+    { path: '/my-orders/:id', element: <MyOrder /> },
+    { path: '/sign-in', element: <SignIn /> },
+    { path: '/*', element: <NotFound /> },
   ])
 
   return routes
@@ -29,12 +30,14 @@ function App() {
   return (
     <ShoppingCartProvider>
       <BrowserRouter>
-        <AppRoutes />
-        <Navbar />
-        <CheckoutSideMenu />
+        <>
+          <Navbar />
+          <CheckoutSideMenu />
+          <AppRoutes />
+        </>
       </BrowserRouter>
     </ShoppingCartProvider>
-  )
+  );
 }
 
 export default App
