@@ -13,12 +13,12 @@ const Navbar = () => {
     return category.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '-');
   };
 
-  const categories = [
-    "Electronics",
-    "Jewelery",
-    "Men's clothing",
-    "Women's clothing"
-  ];
+  const categories = {
+    "Electronics": "Electronics",
+    "Jewelery": "Jewelry",
+    "Men's clothing": "Men's Clothing",
+    "Women's clothing": "Women's Clothing"
+  };
 
   const activeStyle = 'underline underline-offset-4';
 
@@ -30,20 +30,20 @@ const Navbar = () => {
             Shopi
           </NavLink>
         </li>
-        {categories.map(category => (
-          <li key={category}>
+        {Object.entries(categories).map(([routeName, displayName]) => (
+          <li key={routeName}>
             <NavLink
-              to={`/category/${normalizeCategory(category)}`}
+              to={`/category/${normalizeCategory(routeName)}`}
               className={({ isActive }) =>
                 isActive ? activeStyle : undefined
               }
             >
-              {category}
+              {displayName}
             </NavLink>
           </li>
         ))}
       </ul>
-      <ul className='flex items-center gap-3'>
+      <ul className='flex items-center gap-3'>¿
         <li className='text-black/60'>
           amandalimon@outlook.com
         </li>

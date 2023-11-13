@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ShoppingCartContext } from '../../Context'
 import Layout from '../../Components/Layout'
@@ -13,9 +13,9 @@ function Home() {
   } = React.useContext(ShoppingCartContext);
 
   const { category } = useParams();
-  const [itemsByCategory, setItemsByCategory] = useState([]);
-  const [searchValue, setSearchValue] = useState('');
-  const [filteredItems, setFilteredItems] = useState([]);
+  const [itemsByCategory, setItemsByCategory] = React.useState([]);
+  const [searchValue, setSearchValue] = React.useState('');
+  const [filteredItems, setFilteredItems] = React.useState([]);
 
   useEffect(() => {
     const categoryLower = category?.toLowerCase();
