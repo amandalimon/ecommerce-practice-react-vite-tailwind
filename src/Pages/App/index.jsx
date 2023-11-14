@@ -12,7 +12,7 @@ import './App.css'
 
 const AppRoutes = () => {
   let routes = useRoutes([
-    { path: '/', element: <Home /> },
+    { path: '/ecommerce-practice-react-vite-tailwind/', element: <Home /> },
     { path: '/category/:category', element: <Home /> },
     { path: '/my-account', element: <MyAccount /> },
     { path: '/my-order', element: <MyOrder /> },
