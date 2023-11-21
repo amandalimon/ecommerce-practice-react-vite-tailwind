@@ -48,7 +48,7 @@ const Navbar = () => {
       return (
         <>
           <li className='text-black/60'>
-            amandalimon@outlook.com
+            {parsedAccount.email}
           </li>
           <li>
             <NavLink
@@ -79,10 +79,10 @@ const Navbar = () => {
       return (
         <li>
           <NavLink
-            to={`${isUserSignOut ? '/sign-in': '/'}`}
+            to='/sign-in'
             className={({ isActive }) => isActive ? activeStyle : undefined}
             onClick={() => handleSignOut()}>
-            Sign Out
+            Sign in
           </NavLink>
         </li>
       )
@@ -114,7 +114,7 @@ const Navbar = () => {
       <ul className='flex items-center gap-3'>
         {renderView()}
         <li className='flex items-center cursor-pointer'>
-          <ShoppingBagIcon className='w-6 h-6'
+          <ShoppingBagIcon className='w-5 h-5'
             onClick={() => setOpenCheckoutSM(state => !state)} />
           <div>{cartProducts.length}</div>
         </li>
