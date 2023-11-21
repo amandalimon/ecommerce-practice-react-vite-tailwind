@@ -61,10 +61,8 @@ function SignIn() {
           <span className='bg-white rounded-lg font-light p-4'>{parsedAccount?.password}</span>
         </p>
 
-        <Link to="/ecommerce-practice-react-vite-tailwind/">
-          <button className='bg-black text-white w-full rounded-lg p-2 disabled:bg-black/40' disabled={!hasUserAnAccount}>
-            Log in
-          </button>
+        <Link to="/ecommerce-practice-react-vite-tailwind/" onClick={() => handleSignIn()} disabled={!hasUserAnAccount}>
+          <button className='bg-black text-white w-full rounded-lg p-2 disabled:bg-black/40'>Log in</button>
         </Link>
 
         <a className='text-xs font-light underline underline-offset-4' href='/'>Forgot my password</a>
@@ -100,7 +98,7 @@ function SignIn() {
           <label htmlFor="email" className=''>Your email:</label>
           <input
             type="text"
-            id="nemailme"
+            id="email"
             name="email"
             defaultValue={parsedAccount?.email}
             placeholder="hellow-world@gmail.com"
@@ -111,7 +109,7 @@ function SignIn() {
         <div className='flex flex-col gap-2 mb-3 text-sm'>
           <label htmlFor="password" className=''>Your password:</label>
           <input
-            type="text"
+            type="password"
             id="password"
             name="password"
             defaultValue={parsedAccount?.password}

@@ -1,5 +1,6 @@
-import { useRoutes, BrowserRouter } from 'react-router-dom'
-import { ShoppingCartProvider } from '../../Context'
+import { useContext } from 'react'
+import { BrowserRouter, Navigate, useRoutes } from 'react-router-dom'
+import { ShoppingCartProvider, initializeLocalStorage, ShoppingCartContext } from '../../Context'
 import Home from '../Home'
 import MyAccount from '../MyAccount'
 import MyOrder from '../MyOrder'
@@ -11,9 +12,25 @@ import CheckoutSideMenu from '../../Components/CheckoutSideMenu'
 import './App.css'
 
 const AppRoutes = () => {
+  const context = useContext(ShoppingCartContext)
+
+  // Account
+  const account = localStorage.getItem('account')
+  const parsedAccount = JSON.parse(account)
+
+  // Sign Out
+  const signOut = localStorage.getItem('sign-out')
+  const parsedSignOut = JSON.parse(signOut)
+
+  // Has an account
+  const noAccountInLocalStorage = !parsedAccount;
+  const noAccountInLocalState = !context.account;
+  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
+  const isUserSignOut = context.signOut || parsedSignOut
+
   let routes = useRoutes([
-    { path: '/ecommerce-practice-react-vite-tailwind/', element: <Home /> },
-    { path: '/category/:category', element: <Home /> },
+    { path: '/ecommerce-practice-react-vite-tailwind/', element: hasUserAnAccount && !isUserSignOut ? <Home /> : <Navigate replace to={'/sign-in'} /> },
+    { path: '/category/:category', element: hasUserAnAccount && !isUserSignOut ? <Home /> : <Navigate replace to={'/sign-in'} /> },
     { path: '/my-account', element: <MyAccount /> },
     { path: '/my-order', element: <MyOrder /> },
     { path: '/my-orders', element: <MyOrders /> },
@@ -27,13 +44,15 @@ const AppRoutes = () => {
 }
 
 function App() {
+  initializeLocalStorage()
+
   return (
     <ShoppingCartProvider>
       <BrowserRouter>
         <>
+          <AppRoutes />
           <Navbar />
           <CheckoutSideMenu />
-          <AppRoutes />
         </>
       </BrowserRouter>
     </ShoppingCartProvider>

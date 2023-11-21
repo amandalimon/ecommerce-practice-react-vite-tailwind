@@ -28,6 +28,15 @@ const Navbar = () => {
   const parsedSignOut = JSON.parse(signOut)
   const isUserSignOut = useContext.signOut || parsedSignOut
 
+  // Account
+  const account = localStorage.getItem('account')
+  const parsedAccount = JSON.parse(account)
+
+  // Has an account
+  const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true
+  const noAccountInLocalState = useContext.account ? Object.keys(useContext.account).length === 0 : true
+  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
+
   const handleSignOut = () => {
     const stringifiedSignOut = JSON.stringify(true)
     localStorage.setItem('sign-out', stringifiedSignOut)
@@ -35,18 +44,7 @@ const Navbar = () => {
   }
 
   const renderView = () => {
-    if (isUserSignOut) {
-      return (
-        <li>
-          <NavLink
-            to='/sign-in'
-            className={({ isActive }) => isActive ? activeStyle : undefined}
-            onClick={() => handleSignOut()}>
-            Sign Out
-          </NavLink>
-        </li>
-      )
-    } else {
+    if (hasUserAnAccount && !isUserSignOut) {
       return (
         <>
           <li className='text-black/60'>
@@ -75,6 +73,18 @@ const Navbar = () => {
             </NavLink>
           </li>
         </>
+      )
+
+    } else {
+      return (
+        <li>
+          <NavLink
+            to={`${isUserSignOut ? '/sign-in': '/'}`}
+            className={({ isActive }) => isActive ? activeStyle : undefined}
+            onClick={() => handleSignOut()}>
+            Sign Out
+          </NavLink>
+        </li>
       )
     }
   }

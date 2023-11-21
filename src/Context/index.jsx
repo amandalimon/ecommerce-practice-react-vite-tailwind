@@ -1,8 +1,27 @@
-import React from 'react'
-import { useState } from 'react'
-import { useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react'
 
-const ShoppingCartContext = React.createContext();
+const ShoppingCartContext = createContext();
+
+const initializeLocalStorage = () => {
+  const accountInLocalStorage = localStorage.getItem('account')
+  const signOutInLocalStorage = localStorage.getItem('sign-out')
+  let parsedAccount
+  let parsedSignOut
+
+  if (!accountInLocalStorage) {
+    localStorage.setItem('account', JSON.stringify({}))
+    parsedAccount = {}
+  } else {
+    parsedAccount = JSON.parse(accountInLocalStorage)
+  }
+
+  if (!signOutInLocalStorage) {
+    localStorage.setItem('sign-out', JSON.stringify(false))
+    parsedSignOut = false
+  } else {
+    parsedSignOut =JSON.parse(signOutInLocalStorage)
+  }
+}
 
 function ShoppingCartProvider({ children }) {
 
@@ -30,29 +49,8 @@ function ShoppingCartProvider({ children }) {
     fetch('https://fakestoreapi.com/products')
       .then(res => res.json())
       .then(data => setItems(data))
-  }, [])
-
-  const initializeLocalStorage = () => {
-    const accountInLocalStorage = localStorage.getItem('account')
-    const signOutInLocalStorage = localStorage.getItem('sign-out')
-    let parsedAccount
-    let parsedSignOut
-
-    if (!accountInLocalStorage) {
-      localStorage.setItem('account', JSON.stringify({}))
-      parsedAccount = {}
-    } else {
-      parsedAccount = JSON.parse(accountInLocalStorage)
-    }
-
-    if (!signOutInLocalStorage) {
-      localStorage.setItem('sign-out', JSON.stringify(false))
-      parsedSignOut = false
-    } else {
-      parsedSignOut =JSON.parse(signOutInLocalStorage)
-    }
-  }
-
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
 
   return (
     <ShoppingCartContext.Provider value={{
@@ -71,11 +69,11 @@ function ShoppingCartProvider({ children }) {
       account,
       setAccount,
       signOut,
-      setSignOut
+      setSignOut,
     }}>
       {children}
     </ShoppingCartContext.Provider>
   );
 }
 
-export { ShoppingCartContext, ShoppingCartProvider }
+export { ShoppingCartContext, ShoppingCartProvider, initializeLocalStorage }
