@@ -21,13 +21,13 @@ function CheckoutSideMenu() {
         setCartProducts(filteredProducts)
     }
 
-    const increaseQuantity = (id, quantity) => {
+    const increaseQuantity = (id) => {
         const productCart = cartProducts.find(cartItem => cartItem.id === id);
         productCart.quantity += 1;
         setCartProducts([...cartProducts]);
     }
 
-    const decreaseQuantity = (id, quantity) => {
+    const decreaseQuantity = (id) => {
         const deletedProduct = cartProducts.filter(product => product.id != id);
         const productCart = cartProducts.find(cartItem => cartItem.id === id);
         productCart.quantity -= 1;
@@ -45,6 +45,7 @@ function CheckoutSideMenu() {
         }
         setOrder([...order, orderToAdd])
         setCartProducts([])
+        setOpenCheckoutSM(false)
     }
 
     return (
@@ -65,9 +66,9 @@ function CheckoutSideMenu() {
                         title={data.title}
                         image={data.image}
                         price={data.price}
+                        quantity={data.quantity}
                         handleDelete={handleDelete}
                         handleCheckout={handleCheckout}
-                        quantity={data.quantity}
                         increaseQuantity={increaseQuantity}
                         decreaseQuantity={decreaseQuantity}
                     />

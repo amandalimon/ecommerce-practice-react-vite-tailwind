@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ShoppingCartContext } from '../../Context';
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
@@ -8,7 +8,7 @@ const Navbar = () => {
     cartProducts,
     setOpenCheckoutSM,
     setSignOut,
-  } = React.useContext(ShoppingCartContext);
+  } = useContext(ShoppingCartContext);
 
   const activeStyle = 'underline underline-offset-4';
 
@@ -92,8 +92,8 @@ const Navbar = () => {
   return (
     <nav className='bg-white flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light'>
       <ul className='flex items-center gap-3'>
-        <li className='font-semibold text-lg'>
-          <NavLink to='/ecommerce-practice-react-vite-tailwind/'>
+        <li className='font-extrabold text-lg underline decoration-pink-300'>
+          <NavLink to='/'>
             Shopi
           </NavLink>
         </li>

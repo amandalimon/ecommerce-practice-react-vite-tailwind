@@ -1,16 +1,20 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-import {ShoppingCartContext} from '../../Context'
-import {ChevronLeftIcon} from '@heroicons/react/24/solid'
+import { useContext } from 'react'
+import { Link, useParams } from 'react-router-dom';
+import { ShoppingCartContext } from '../../Context'
+import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import Layout from '../../Components/Layout'
 import OrderCard from '../../Components/OrderCard'
 
 function MyOrder() {
-const { order } = React.useContext(ShoppingCartContext);
+  const { order } = useContext(ShoppingCartContext);
 
-const currentPath = window.location.pathname
-let index = currentPath.substring(currentPath.lastIndexOf('/') + 1 )
-if (index === 'last') index = order?.length - 1
+  const lastOrderIndex = order ? order.length - 1 : 0;
+
+  const { id } = useParams();
+  const numericId = parseInt(id, 10);
+  const index = !isNaN(numericId) && numericId >= 0 && numericId < order.length
+    ? numericId
+    : lastOrderIndex;
 
   return (
     <Layout>

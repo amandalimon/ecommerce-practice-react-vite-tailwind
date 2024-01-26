@@ -1,5 +1,5 @@
 import { useContext, useState, useRef } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ShoppingCartContext } from '../../Context'
 import Layout from '../../Components/Layout'
 
@@ -17,14 +17,14 @@ function SignIn() {
   const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true
   const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
 
+  // Sign In
   const handleSignIn = () => {
-    const stringifiedSignOut = JSON.stringify(false)
-    localStorage.setItem('sign-out', stringifiedSignOut)
-    context.setSignOut(false)
-    // Redirect
-    return <Navigate replace to={'/ecommerce-practice-react-vite-tailwind/'} />
+    const stringifiedSignOut = JSON.stringify(false);
+    localStorage.setItem('sign-out', stringifiedSignOut);
+    context.setSignOut(false);
   }
 
+  // Create account
   const createAnAccount = () => {
     const formData = new FormData(form.current)
     const data = {
@@ -32,18 +32,16 @@ function SignIn() {
       email: formData.get('email'),
       password: formData.get('password')
     }
-    // Create account
     const stringifiedAccount = JSON.stringify(data)
     localStorage.setItem('account', stringifiedAccount)
     context.setAccount(data)
-    // Sign In
-    handleSignIn()
+    handleSignIn();
   }
 
   const renderLogIn = () => {
     return (
       <div className='mt-9'>
-        <h1 className='font-bold text-3xl'> Welcome back.</h1>
+        <h1 className='font-bold text-3xl'> Welcome back</h1>
 
         <p className='mb-6'>
           <span className='text-sm font-light'>Don't have an account? </span>
@@ -58,11 +56,18 @@ function SignIn() {
 
         <p className='flex flex-col text-sm mb-6'>
           <span>Password</span>
-          <span className='bg-white rounded-lg font-light p-4'>{parsedAccount?.password}</span>
+          <span className='bg-white rounded-lg font-light p-4'>
+            {parsedAccount?.password?.split('').map(() => '*').join('')}
+          </span>
         </p>
 
-        <Link to="/ecommerce-practice-react-vite-tailwind/" onClick={() => handleSignIn()} disabled={!hasUserAnAccount}>
-          <button className='bg-black text-white w-full rounded-lg p-2 disabled:bg-black/40'>Log in</button>
+        <Link to="/">
+          <button
+            onClick={() => handleSignIn()} disabled={!hasUserAnAccount}
+            className='bg-black text-white w-full rounded-lg p-2 disabled:bg-black/40'
+          >
+            Log in
+          </button>
         </Link>
 
         <a className='text-xs font-light underline underline-offset-4' href='/'>Forgot my password</a>
@@ -118,9 +123,11 @@ function SignIn() {
           ></input>
         </div>
 
-        <Link to="/ecommerce-practice-react-vite-tailwind/">
-          <button className='bg-black text-white w-full rounded-lg p-2 mt-9'
-            onClick={() => createAnAccount()}>
+        <Link to="/">
+          <button
+            onClick={() => createAnAccount()}
+            className='bg-black text-white w-full rounded-lg p-2 mt-9'
+          >
             Create Account
           </button>
         </Link>
@@ -134,7 +141,7 @@ function SignIn() {
   return (
     <Layout>
       <div className='w-80 mt-9'>
-        <h1 className='font-semibold text-lg underline decoration-pink-300'>Shopi</h1>
+        <h1 className='font-extrabold text-lg underline decoration-pink-300'>Shopi</h1>
         {renderView()}
       </div>
     </Layout>

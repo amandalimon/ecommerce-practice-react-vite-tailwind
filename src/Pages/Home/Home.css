@@ -1,0 +1,19 @@
+@keyframes moveLeftToRight {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(10%);
+    }
+}
+
+.animate-move {
+    opacity: 1;
+    animation: moveLeftToRight 60s linear infinite;
+}
+
+.text-content {
+    white-space: nowrap;
+    margin-inline: 48px;
+}
